@@ -1,0 +1,21 @@
+function Hero() {
+  return (
+    <section className="hero">
+      <div className="hero-mark">
+        <span>MR</span>
+        <span>14</span>
+      </div>
+
+      <p className="hero-tagline">
+        words have a pulse.
+      </p>
+
+      <div className="hero-enter">
+        <span>scroll to enter</span>
+        <span className="hero-arrow">↓</span>
+      </div>
+    </section>
+  );
+}
+
+export default Hero;
