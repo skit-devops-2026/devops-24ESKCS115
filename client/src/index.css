@@ -52,24 +52,6 @@ body {
   text-transform: lowercase;
   color: #77736c;
 }
-
-.hero-enter {
-  position: absolute;
-  bottom: 3rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.7rem;
-  color: #77736c;
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-
-.hero-arrow {
-  font-size: 1.2rem;
-}
-
 .journal-intro {
   min-height: 80vh;
   padding: 12rem 10vw;
@@ -78,7 +60,7 @@ body {
   justify-content: center;
 }
 
-.journal-intro p {
+.journal-intro > p {
   font-size: 0.7rem;
   letter-spacing: 0.3em;
   color: #77736c;
@@ -93,24 +75,17 @@ body {
   letter-spacing: -0.04em;
   max-width: 900px;
 }
-.hero-enter {
-  position: absolute;
-  bottom: 3rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.7rem;
-  color: #77736c;
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  text-decoration: none;
-}
+
 .poem-card {
   margin-top: 8rem;
   max-width: 750px;
   padding: 3rem 0;
   border-top: 1px solid #242426;
+  transition: transform 0.5s ease;
+}
+
+.poem-card:hover {
+  transform: translateY(-5px);
 }
 
 .poem-label {
@@ -126,6 +101,11 @@ body {
   font-size: clamp(2rem, 4vw, 3.5rem);
   font-weight: 400;
   line-height: 1.1;
+  transition: opacity 0.3s ease;
+}
+
+.poem-card:hover .poem-title {
+  opacity: 0.7;
 }
 
 .poem-text {
@@ -144,17 +124,45 @@ body {
   text-transform: uppercase;
   color: #77736c;
 }
+.hero-enter {
+  position: absolute;
+  bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  color: #77736c;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.hero-arrow {
+  font-size: 1.2rem;
+}
+
+.hero-enter {
+  position: absolute;
+  bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  color: #77736c;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   padding: 1.5rem 3rem;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   z-index: 10;
 }
 
@@ -163,6 +171,11 @@ body {
   font-family: "Playfair Display", serif;
   font-size: 1.2rem;
   text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.navbar-logo:hover {
+  opacity: 0.6;
 }
 
 .navbar-links {
@@ -171,15 +184,32 @@ body {
 }
 
 .navbar-links a {
+  position: relative;
   color: #77736c;
   font-size: 0.7rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.navbar-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.4rem;
+  width: 0;
+  height: 1px;
+  background: #f1efe9;
+  transition: width 0.3s ease;
 }
 
 .navbar-links a:hover {
   color: #f1efe9;
+}
+
+.navbar-links a:hover::after {
+  width: 100%;
 }
 .discover {
   min-height: 100vh;
@@ -188,6 +218,7 @@ body {
 
 .discover-header {
   margin-bottom: 8rem;
+  animation: pageReveal 1s ease forwards;
 }
 
 .discover-header p {
@@ -205,18 +236,16 @@ body {
   letter-spacing: -0.04em;
 }
 
-.discover-poems {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 6rem 4rem;
-}
 .discover-filters {
   display: flex;
   gap: 2rem;
   margin-bottom: 6rem;
+  animation: pageReveal 1s ease 0.15s forwards;
+  opacity: 0;
 }
 
 .discover-filters button {
+  position: relative;
   padding: 0;
   border: none;
   background: none;
@@ -226,8 +255,531 @@ body {
   letter-spacing: 0.15em;
   text-transform: uppercase;
   cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.discover-filters button::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.4rem;
+  width: 0;
+  height: 1px;
+  background: #f1efe9;
+  transition: width 0.3s ease;
 }
 
 .discover-filters button:hover {
   color: #f1efe9;
+}
+
+.discover-filters button:hover::after {
+  width: 100%;
+}
+
+.discover-poems {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6rem 4rem;
+  animation: pageReveal 1s ease 0.3s forwards;
+  opacity: 0;
+}
+
+.discover-poems .poem-card {
+  margin-top: 0;
+}
+
+@keyframes pageReveal {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.write {
+  min-height: 100vh;
+  padding: 10rem 10vw;
+}
+
+.write-header {
+  margin-bottom: 6rem;
+  animation: writeReveal 1s ease forwards;
+}
+
+.write-header p {
+  margin-bottom: 2rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  color: #77736c;
+}
+
+.write-header h1 {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(3rem, 7vw, 7rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.write-form {
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  animation: formReveal 1s ease 0.2s forwards;
+  opacity: 0;
+}
+
+.write-form input,
+.write-form textarea {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #242426;
+  background: transparent;
+  color: #f1efe9;
+  font-family: "Playfair Display", serif;
+  outline: none;
+}
+
+.write-form input {
+  padding: 1rem 0;
+  font-size: 2rem;
+}
+
+.write-form textarea {
+  min-height: 300px;
+  padding: 1rem 0;
+  font-size: 1.4rem;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.write-form input::placeholder,
+.write-form textarea::placeholder {
+  color: #77736c;
+}
+
+.write-form input:focus,
+.write-form textarea:focus {
+  border-color: #77736c;
+}
+
+.write-form button {
+  align-self: flex-start;
+  padding: 0.8rem 1.5rem;
+  border: 1px solid #242426;
+  background: transparent;
+  color: #f1efe9;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.write-form button:hover {
+  background: #f1efe9;
+  color: #080808;
+  transform: translateY(-2px);
+}
+
+@keyframes writeReveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes formReveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+.success-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: rgba(8, 8, 8, 0.88);
+  backdrop-filter: blur(12px);
+  animation: successFade 0.4s ease forwards;
+}
+
+.success-overlay::before {
+  content: "";
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: rgba(200, 184, 154, 0.06);
+  filter: blur(80px);
+  animation: successGlow 4s ease-in-out infinite alternate;
+}
+
+.success-message {
+  position: relative;
+  width: min(620px, 90%);
+  padding: 5rem 4rem 4rem;
+  border: 1px solid #242426;
+  background: #0c0c0d;
+  text-align: center;
+  animation: successReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.success-message::before,
+.success-message::after {
+  content: "";
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  border-color: #77736c;
+  border-style: solid;
+}
+
+.success-message::before {
+  top: 1rem;
+  left: 1rem;
+  border-width: 1px 0 0 1px;
+}
+
+.success-message::after {
+  right: 1rem;
+  bottom: 1rem;
+  border-width: 0 1px 1px 0;
+}
+
+.success-logo {
+  position: absolute;
+  top: 1.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Playfair Display", serif;
+  font-size: 1.1rem;
+  letter-spacing: -0.05em;
+  color: #f1efe9;
+}
+
+.success-label {
+  margin-bottom: 1.5rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.4em;
+  color: #77736c;
+}
+
+.success-message h2 {
+  max-width: 450px;
+  margin: 0 auto 2.5rem;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.success-message button {
+  position: relative;
+  padding: 0.9rem 1.8rem;
+  border: 1px solid #242426;
+  background: transparent;
+  color: #f1efe9;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.success-message button:hover {
+  border-color: #f1efe9;
+  background: #f1efe9;
+  color: #080808;
+  transform: translateY(-2px);
+}
+
+@keyframes successFade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes successReveal {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes successGlow {
+  from {
+    transform: scale(0.8);
+    opacity: 0.4;
+  }
+
+  to {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+.write-form select {
+  width: fit-content;
+  padding: 0.8rem 2.5rem 0.8rem 1rem;
+  border: 1px solid #242426;
+  background: #080808;
+  color: #77736c;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  outline: none;
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.write-form select:hover,
+.write-form select:focus {
+  border-color: #77736c;
+  color: #f1efe9;
+}
+
+.write-form option {
+  background: #080808;
+  color: #f1efe9;
+}
+.like-button {
+  padding: 0.6rem 0.4rem;
+  border: none;
+  background: transparent;
+  color: #77736c;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.like-button:hover {
+  color: #f1efe9;
+  transform: translateY(-2px);
+}
+
+.like-button.liked {
+  color: #c8b89a;
+}
+.poem-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.share-button {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #242426;
+  background: transparent;
+  color: #77736c;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    color 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.share-button:hover {
+  color: #f1efe9;
+  border-color: #77736c;
+  transform: translateY(-2px);
+}
+.poem-comments {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #242426;
+}
+
+.poem-comments p {
+  margin-bottom: 1rem;
+  color: #77736c;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.poem-comments p span {
+  color: #f1efe9;
+}
+
+.poem-comments form {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.poem-comments input {
+  flex: 1;
+  border: none;
+  border-bottom: 1px solid #242426;
+  background: transparent;
+  color: #f1efe9;
+  font-family: "DM Sans", sans-serif;
+  outline: none;
+  padding: 0.7rem 0;
+}
+
+.poem-comments input:focus {
+  border-color: #77736c;
+}
+
+.poem-comments input::placeholder {
+  color: #77736c;
+}
+
+.poem-comments form button {
+  border: none;
+  background: transparent;
+  color: #77736c;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.poem-comments form button:hover {
+  color: #f1efe9;
+}
+.profile {
+  min-height: 100vh;
+  padding: 10rem 10vw;
+}
+
+.profile-header {
+  margin-bottom: 8rem;
+  animation: pageReveal 1s ease forwards;
+}
+
+.profile-header > p:first-child {
+  margin-bottom: 2rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  color: #77736c;
+}
+
+.profile-header h1 {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(4rem, 9vw, 9rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+}
+
+.profile-count {
+  margin-top: 2rem;
+  color: #77736c;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.profile-poems {
+  max-width: 900px;
+}
+
+.profile-section-header {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #242426;
+  color: #77736c;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+}
+
+.profile-poem {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 2rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid #242426;
+  transition: padding-left 0.3s ease;
+}
+
+.profile-poem:hover {
+  padding-left: 1rem;
+}
+
+.profile-poem > span {
+  color: #77736c;
+  font-size: 0.7rem;
+}
+
+.profile-poem h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.profile-poem p {
+  margin-top: 0.5rem;
+  color: #77736c;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.profile-empty {
+  padding: 3rem 0;
+  color: #77736c;
+  font-family: "Playfair Display", serif;
+  font-size: 1.5rem;
 }

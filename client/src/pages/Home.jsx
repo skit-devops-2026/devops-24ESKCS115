@@ -1,8 +1,7 @@
 import Hero from "../components/Hero";
 import PoemCard from "../components/PoemCard";
-import poems from "../data/poem";
 
-function Home() {
+function Home({ poems }) {
   return (
     <main>
       <Hero />
@@ -16,9 +15,11 @@ function Home() {
           who had something to say.
         </h2>
 
-        {poems.map((poem) => (
+        {poems.map((poem, index) => (
           <PoemCard
             key={poem.id}
+            id={poem.id}
+            number={index + 1}
             title={poem.title}
             author={poem.author}
             poem={poem.poem}

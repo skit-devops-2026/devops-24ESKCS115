@@ -1,8 +1,7 @@
 import { useState } from "react";
-import poems from "../data/poem";
 import PoemCard from "../components/PoemCard";
 
-function Discover() {
+function Discover({ poems }) {
   const [category, setCategory] = useState("all");
 
   const filteredPoems =
@@ -41,12 +40,15 @@ function Discover() {
       </nav>
 
       <section className="discover-poems">
-        {filteredPoems.map((poem) => (
+        {filteredPoems.map((poem, index) => (
           <PoemCard
             key={poem.id}
+            number={index + 1}
             title={poem.title}
             author={poem.author}
             poem={poem.poem}
+            category={poem.category}
+            id={poem.id}
           />
         ))}
       </section>
