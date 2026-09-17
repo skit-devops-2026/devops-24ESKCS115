@@ -700,86 +700,289 @@ body {
 }
 .profile {
   min-height: 100vh;
-  padding: 10rem 10vw;
+  padding: 9rem 6vw 5rem;
 }
 
 .profile-header {
-  margin-bottom: 8rem;
-  animation: pageReveal 1s ease forwards;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-bottom: 4rem;
+  animation: pageReveal 0.8s ease forwards;
 }
 
-.profile-header > p:first-child {
-  margin-bottom: 2rem;
-  font-size: 0.7rem;
-  letter-spacing: 0.3em;
-  color: #77736c;
+.profile-identity {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
 }
 
-.profile-header h1 {
+.profile-mark {
+  width: 150px;
+  height: 150px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #242426;
   font-family: "Playfair Display", serif;
-  font-size: clamp(4rem, 9vw, 9rem);
-  font-weight: 400;
-  line-height: 0.95;
-  letter-spacing: -0.05em;
+  font-size: 2.5rem;
+  line-height: 0.7;
 }
 
-.profile-count {
-  margin-top: 2rem;
+.profile-mark span {
+  margin-top: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.profile-info h1 {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+}
+
+.profile-stats {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.profile-stats span {
+  display: flex;
+  gap: 0.4rem;
   color: #77736c;
-  font-size: 0.75rem;
-  letter-spacing: 0.15em;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-.profile-poems {
-  max-width: 900px;
+.profile-stats strong {
+  color: #f1efe9;
+  font-weight: 500;
 }
 
-.profile-section-header {
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #242426;
+.profile-bio {
+  margin-top: 1.5rem;
   color: #77736c;
+  font-family: "Playfair Display", serif;
+  font-size: 1rem;
+}
+
+.profile-edit {
+  margin-top: 3rem;
+  padding: 0.7rem 1.4rem;
+  border: 1px solid #242426;
+  background: transparent;
+  color: #f1efe9;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
+}
+
+.profile-edit:hover {
+  background: #f1efe9;
+  color: #080808;
+}
+
+.profile-tabs {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+  border-top: 1px solid #242426;
+  border-bottom: 1px solid #242426;
+}
+
+.profile-tabs button {
+  position: relative;
+  padding: 1.2rem 0;
+  border: none;
+  background: transparent;
+  color: #77736c;
+  font-family: "DM Sans", sans-serif;
   font-size: 0.65rem;
   letter-spacing: 0.2em;
+  cursor: pointer;
+}
+
+.profile-tabs button.active {
+  color: #f1efe9;
+}
+
+.profile-tabs button.active::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: #f1efe9;
+}
+
+.profile-grid {
+  max-width: 1100px;
+  margin: 2rem auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
 }
 
 .profile-poem {
-  display: grid;
-  grid-template-columns: 70px 1fr;
-  gap: 2rem;
-  padding: 2rem 0;
-  border-bottom: 1px solid #242426;
-  transition: padding-left 0.3s ease;
+  position: relative;
+  min-height: 300px;
+  padding: 2rem;
+  border: 1px solid #242426;
+  background: #0c0c0d;
+  color: #f1efe9;
+  text-decoration: none;
+  overflow: hidden;
+  transition:
+    background 0.4s ease,
+    transform 0.4s ease;
 }
 
 .profile-poem:hover {
-  padding-left: 1rem;
+  background: #121214;
+  transform: translateY(-3px);
 }
 
-.profile-poem > span {
+.profile-poem-category {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
   color: #77736c;
-  font-size: 0.7rem;
 }
 
 .profile-poem h2 {
+  margin-top: 4rem;
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.profile-poem p {
+  margin-top: 1rem;
+  color: #77736c;
+  font-family: "Playfair Display", serif;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.profile-poem-arrow {
+  position: absolute;
+  right: 2rem;
+  bottom: 2rem;
+  color: #77736c;
+  transition: transform 0.3s ease;
+}
+
+.profile-poem:hover .profile-poem-arrow {
+  transform: translateX(5px);
+}
+
+.profile-empty {
+  grid-column: 1 / -1;
+  padding: 8rem 2rem;
+  text-align: center;
+}
+
+.profile-empty h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 2.5rem;
+  font-weight: 400;
+}
+
+.profile-empty p {
+  margin-top: 1rem;
+  color: #77736c;
+}
+.save-button {
+  padding: 0.6rem 0.4rem;
+  border: none;
+  background: transparent;
+  color: #77736c;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.save-button:hover {
+  color: #f1efe9;
+  transform: translateY(-2px);
+}
+
+.save-button.saved {
+  color: #c8b89a;
+}
+.profile-edit-panel {
+  max-width: 1100px;
+  margin: 0 auto 3rem;
+  padding: 2rem;
+  border: 1px solid #242426;
+  background: #0c0c0d;
+}
+
+.profile-edit-panel h2 {
+  margin-bottom: 2rem;
   font-family: "Playfair Display", serif;
   font-size: 2rem;
   font-weight: 400;
 }
 
-.profile-poem p {
-  margin-top: 0.5rem;
+.profile-edit-panel input,
+.profile-edit-panel textarea {
+  width: 100%;
+  margin-bottom: 1.5rem;
+  padding: 0.8rem 0;
+  border: none;
+  border-bottom: 1px solid #242426;
+  background: transparent;
+  color: #f1efe9;
+  font-family: "DM Sans", sans-serif;
+  outline: none;
+}
+
+.profile-edit-panel textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.profile-edit-panel input:focus,
+.profile-edit-panel textarea:focus {
+  border-color: #77736c;
+}
+
+.profile-edit-panel input::placeholder,
+.profile-edit-panel textarea::placeholder {
   color: #77736c;
+}
+
+.profile-edit-panel button {
+  padding: 0.8rem 1.5rem;
+  border: 1px solid #242426;
+  background: transparent;
+  color: #f1efe9;
+  font-family: "DM Sans", sans-serif;
   font-size: 0.65rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
+  cursor: pointer;
 }
 
-.profile-empty {
-  padding: 3rem 0;
-  color: #77736c;
-  font-family: "Playfair Display", serif;
-  font-size: 1.5rem;
+.profile-edit-panel button:hover {
+  background: #f1efe9;
+  color: #080808;
 }

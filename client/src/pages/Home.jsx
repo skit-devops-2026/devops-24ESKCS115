@@ -1,7 +1,7 @@
 import Hero from "../components/Hero";
 import PoemCard from "../components/PoemCard";
 
-function Home({ poems }) {
+function Home({ poems, savedPoems, toggleSave }) {
   return (
     <main>
       <Hero />
@@ -23,6 +23,8 @@ function Home({ poems }) {
             title={poem.title}
             author={poem.author}
             poem={poem.poem}
+            saved={savedPoems.includes(poem.id)}
+            onSave={toggleSave}
           />
         ))}
       </section>

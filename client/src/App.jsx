@@ -12,6 +12,17 @@ import Profile from "./pages/Profile";
 
 function App() {
   const [poems, setPoems] = useState(poemsData);
+  const [savedPoems, setSavedPoems] = useState([]);
+
+  const toggleSave = (poemId) => {
+  setSavedPoems((currentSaved) => {
+    if (currentSaved.includes(poemId)) {
+      return currentSaved.filter((id) => id !== poemId);
+    }
+
+    return [...currentSaved, poemId];
+  });
+};
 
   return (
     <BrowserRouter>
@@ -20,13 +31,37 @@ function App() {
       <Routes>
         <Route
   path="/profile"
-  element={<Profile poems={poems} />}
+  element={
+    <Profile
+      poems={poems}
+      savedPoems={savedPoems}
+    />
+  }
 />
         <Route
   path="/poem/:id"
   element={<Poem poems={poems} />}
 />
-        <Route path="/" element={<Home poems={poems} />} />
+        <Route
+  path="/"
+  element={
+    <Home
+      poems={poems}
+      savedPoems={savedPoems}
+      toggleSave={toggleSave}
+    />
+  }
+/>
+<Route
+  path="/discover"
+  element={
+    <Discover
+      poems={poems}
+      savedPoems={savedPoems}
+      toggleSave={toggleSave}
+    />
+  }
+/>
 
         <Route
           path="/discover"

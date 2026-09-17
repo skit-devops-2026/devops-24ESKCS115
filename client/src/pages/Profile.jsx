@@ -1,47 +1,149 @@
-function Profile({ poems }) {
-  const username = "someone";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+
+function Profile({ poems, savedPoems }) {
+  const [username, setUsername] = useState("someone");
+const [bio, setBio] = useState("words have a pulse.");
+const [instagram, setInstagram] = useState("");
+const [activeTab, setActiveTab] = useState("poems");
+const [editing, setEditing] = useState(false);
 
   const userPoems = poems.filter(
     (poem) => poem.author === "You"
   );
 
+  const saved = poems.filter(
+    (poem) => savedPoems.includes(poem.id)
+  );
+
+  const displayedPoems =
+    activeTab === "poems"
+      ? userPoems
+      : saved;
+
   return (
     <main className="profile">
       <section className="profile-header">
-        <p>PROFILE</p>
+        <div className="profile-identity">
+          <div className="profile-mark">
+            MR
+            <span>14</span>
+          </div>
 
-        <h1>@{username}</h1>
+          <div className="profile-info">
+            <h1>@{username}</h1>
 
-        <p className="profile-count">
-          {userPoems.length} poems
-        </p>
-      </section>
+            <div className="profile-stats">
+              <span>
+                <strong>{userPoems.length}</strong>
+                poems
+              </span>
 
-      <section className="profile-poems">
-        <div className="profile-section-header">
-          <span>YOUR POEMS</span>
-          <span>{userPoems.length}</span>
+              <span>
+                <strong>0</strong>
+                followers
+              </span>
+
+              <span>
+                <strong>0</strong>
+                following
+              </span>
+            </div>
+
+            <p className="profile-bio">
+  {bio}
+</p>
+          </div>
         </div>
 
-        {userPoems.length === 0 ? (
-          <p className="profile-empty">
-            You haven't written anything yet.
-          </p>
+        <button
+  className="profile-edit"
+  onClick={() => setEditing(true)}
+>
+  Edit profile
+</button>
+      </section>
+      {editing && (
+  <div className="profile-edit-panel">
+    <h2>Edit profile</h2>
+
+    <input
+      type="text"
+      value={username}
+      onChange={(event) => setUsername(event.target.value)}
+      placeholder="Username"
+    />
+
+    <input
+      type="text"
+      value={instagram}
+      onChange={(event) => setInstagram(event.target.value)}
+      placeholder="Instagram handle (optional)"
+    />
+
+    <textarea
+      value={bio}
+      onChange={(event) => setBio(event.target.value)}
+      placeholder="Bio"
+    />
+
+    <button
+      onClick={() => setEditing(false)}
+    >
+      Save profile
+    </button>
+  </div>
+)}
+      <nav className="profile-tabs">
+        <button
+          className={activeTab === "poems" ? "active" : ""}
+          onClick={() => setActiveTab("poems")}
+        >
+          POEMS
+        </button>
+
+        <button
+          className={activeTab === "saved" ? "active" : ""}
+          onClick={() => setActiveTab("saved")}
+        >
+          SAVED
+        </button>
+      </nav>
+
+      <section className="profile-grid">
+        {displayedPoems.length === 0 ? (
+          <div className="profile-empty">
+            <h2>
+              {activeTab === "poems"
+                ? "Nothing written yet."
+                : "Nothing saved yet."}
+            </h2>
+
+            <p>
+              {activeTab === "poems"
+                ? "Your poems will appear here."
+                : "Poems you save will appear here."}
+            </p>
+          </div>
         ) : (
-          userPoems.map((poem, index) => (
-            <article
+          displayedPoems.map((poem) => (
+            <Link
+              to={`/poem/${poem.id}`}
               className="profile-poem"
               key={poem.id}
             >
-              <span>
-                {String(index + 1).padStart(2, "0")}
+              <span className="profile-poem-category">
+                {poem.category}
               </span>
 
-              <div>
-                <h2>{poem.title}</h2>
-                <p>{poem.category}</p>
-              </div>
-            </article>
+              <h2>{poem.title}</h2>
+
+              <p>{poem.poem}</p>
+
+              <span className="profile-poem-arrow">
+                →
+              </span>
+            </Link>
           ))
         )}
       </section>

@@ -1,9 +1,8 @@
 import { useState } from "react";
 import PoemCard from "../components/PoemCard";
 
-function Discover({ poems }) {
+function Discover({ poems, savedPoems, toggleSave }) {
   const [category, setCategory] = useState("all");
-
   const filteredPoems =
     category === "all"
       ? poems
@@ -49,6 +48,8 @@ function Discover({ poems }) {
             poem={poem.poem}
             category={poem.category}
             id={poem.id}
+            saved={savedPoems.includes(poem.id)}
+            onSave={toggleSave}
           />
         ))}
       </section>

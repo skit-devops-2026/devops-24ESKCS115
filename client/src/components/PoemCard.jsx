@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-function PoemCard({ id, number, title, author, poem }) {
+function PoemCard({ id, number, title, author, poem, saved, onSave }) {
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
-
+const handleSave = () => {
+  setSaved(!saved);
+};
   const handleLike = () => {
     setLiked(!liked);
     setLikeCount(liked ? likeCount - 1 : likeCount + 1);
@@ -70,6 +72,12 @@ function PoemCard({ id, number, title, author, poem }) {
           >
             share ↗
           </button>
+<button
+  className={`save-button ${saved ? "saved" : ""}`}
+  onClick={() => onSave(id)}
+>
+  {saved ? "saved" : "save"}
+</button>
 
           <Link
             to={`/poem/${id}`}
