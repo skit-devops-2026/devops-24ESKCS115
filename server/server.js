@@ -1,3 +1,4 @@
+const cookieParser = require("cookie-parser");
 const authRoutes = require("./routes/auth");
 const express = require("express");
 const mongoose = require("mongoose");
@@ -10,6 +11,8 @@ dns.setServers(["8.8.8.8"]);
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
+
 app.use("/api/auth", authRoutes);
 
 app.get("/", (req, res) => {

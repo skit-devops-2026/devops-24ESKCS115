@@ -1,3 +1,5 @@
+const authenticate = require("../middleware/auth");
+const jwt = require("jsonwebtoken");
 const express = require("express");
 const bcrypt = require("bcryptjs");
 
@@ -81,16 +83,63 @@ router.post("/login", async (req, res) => {
       });
     }
 
+    const token = jwt.sign(
+  {
+    userId: user._id.toString(),
+  },
+  process.env.JWT_SECRET,
+  {
+    expiresIn: "7d",
+  }
+);
+
+res.cookie("token", token, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "lax",
+  maxAge: 7 * 24 * 60 * 60 * 1000,
+});
+
+res.json({
+  message: "Login successful.",
+  user: {
+    id: user._id,
+    username: user.username,
+    email: user.email,
+  },
+});
+  } catch (error) {
+    console.error("Login failed:", error.message);
+
+    res.status(500).json({
+      message: "Something went wrong.",
+    });
+  }
+});
+
+router.get("/me", authenticate, async (req, res) => {
+  try {
+    const user = await User.findById(req.userId).select(
+      "-passwordHash"
+    );
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found.",
+      });
+    }
+
     res.json({
-      message: "Login successful.",
       user: {
         id: user._id,
         username: user.username,
         email: user.email,
+        bio: user.bio,
+        instagram: user.instagram,
       },
     });
   } catch (error) {
-    console.error("Login failed:", error.message);
+    console.error("Fetching current user failed:", error.message);
 
     res.status(500).json({
       message: "Something went wrong.",
