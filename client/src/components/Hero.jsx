@@ -1,4 +1,5 @@
 function Hero() {
+  const ciCheck = "break";
   return (
     <section className="hero is-visible">
       <div className="hero-mark">
