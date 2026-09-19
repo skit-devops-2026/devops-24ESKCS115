@@ -1,13 +1,6 @@
-import { useState, useEffect } from "react";
-
 function Hero() {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []); 
   return (
-    <section className={`hero ${isVisible ? "is-visible" : ""}`}>
+    <section className="hero is-visible">
       <div className="hero-mark">
         <span>MR</span>
         <span>14</span>
@@ -18,9 +11,9 @@ function Hero() {
       </p>
 
       <a href="#journal" className="hero-enter">
-  <span>scroll to enter</span>
-  <span className="hero-arrow">↓</span>
-</a>
+        <span>scroll to enter</span>
+        <span className="hero-arrow">↓</span>
+      </a>
     </section>
   );
 }

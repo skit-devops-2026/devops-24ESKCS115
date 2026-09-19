@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Given to you. Do not delete this job.
+  # ---------------------------------------------------------------------------
+  hygiene:
+    name: Repository hygiene
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run hygiene checks
+        run: bash scripts/hygiene.sh
+
+  # ---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
+  # M3 — Build and test
+  # ---------------------------------------------------------------------------
+  build-and-test:
+    name: Build and test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - run: make install
+      - run: make test
+      - run: make build
+  # ---------------------------------------------------------------------------
+
+  # build-and-test:
+  #   name: Build and test
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #
+  #     # Set up whichever runtime you need, for example:
+  #     # - uses: actions/setup-node@v4
+  #     #   with: { node-version: '20', cache: 'npm' }
+  #     # - uses: actions/setup-python@v5
+  #     #   with: { python-version: '3.12' }
+  #
+  #     - run: make install
+  #     - run: make test
+  #     - run: make build
+
+  # ---------------------------------------------------------------------------
+  # M4 — Containerization. Uncomment and complete when you get there.
+  # The push to the registry is what proves your build actually ran, so it is
+  # not optional.
+  # ---------------------------------------------------------------------------
+
+  # docker:
+  #   name: Build and push images
+  #   needs: build-and-test
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #     packages: write
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: docker/login-action@v3
+  #       with:
+  #         registry: ghcr.io
+  #         username: ${{ github.actor }}
+  #         password: ${{ secrets.GITHUB_TOKEN }}
+  #     - uses: docker/build-push-action@v6
+  #       with:
+  #         context: ./backend
+  #         push: true
+  #         tags: ghcr.io/${{ github.repository }}-backend:${{ github.sha }}
+  #     # ... and the same for ./frontend
+
+  # ---------------------------------------------------------------------------
+  # M5 — Deployment. Add a deploy job here.
+  # ---------------------------------------------------------------------------

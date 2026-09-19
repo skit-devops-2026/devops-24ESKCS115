@@ -6,9 +6,7 @@ function PoemCard({ id, number, title, author, poem, saved, onSave }) {
   const [likeCount, setLikeCount] = useState(0);
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
-const handleSave = () => {
-  setSaved(!saved);
-};
+
   const handleLike = () => {
     setLiked(!liked);
     setLikeCount(liked ? likeCount - 1 : likeCount + 1);
