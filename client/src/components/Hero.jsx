@@ -1,5 +1,6 @@
 function Hero() {
   
+  const jenkinsCheck = "break";
   return (
     <section className="hero is-visible">
       <div className="hero-mark">
