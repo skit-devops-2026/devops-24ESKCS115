@@ -28,5 +28,18 @@ services:
     depends_on:
       - server
 
+    
+  prometheus:
+    image: prom/prometheus
+    container_name: mr14-prometheus
+    restart: unless-stopped
+    ports:
+      - "9091:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on:
+      - server
+
+
 volumes:
   mongo_data:

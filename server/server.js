@@ -12,6 +12,10 @@ const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/users");
 
 const app = express();
+const client = require("prom-client");
+const register = new client.Registry();
+
+client.collectDefaultMetrics({ register });
 
 app.use(
   cors({
@@ -28,6 +32,11 @@ app.use("/api/users", userRoutes);
 
 app.get("/", (req, res) => {
   res.send("MR14 backend is running.");
+});
+
+app.get("/metrics", async (req, res) => {
+  res.set("Content-Type", register.contentType);
+  res.end(await register.metrics());
 });
 
 mongoose
