@@ -1,0 +1,45 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mr14-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mr14-backend
+  template:
+    metadata:
+      labels:
+        app: mr14-backend
+    spec:
+      containers:
+        - name: backend
+          image: divyanshitailor/mr14-server:v1
+          ports:
+            - containerPort: 5000
+          env:
+            - name: PORT
+              value: "5000"
+            - name: MONGO_URI
+              value: "mongodb://mongo:27017/mr14"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mr14-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mr14-frontend
+  template:
+    metadata:
+      labels:
+        app: mr14-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: divyanshitailor/mr14-client:v1
+          ports:
+            - containerPort: 80

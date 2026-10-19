@@ -1,0 +1,26 @@
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mr14-backend
+spec:
+  selector:
+    app: mr14-backend
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mr14-frontend
+spec:
+  selector:
+    app: mr14-frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: NodePort
