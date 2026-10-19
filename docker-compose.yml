@@ -1,0 +1,32 @@
+
+services:
+  mongo:
+    image: mongo:7
+    container_name: mr14-mongo
+    restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+
+  server:
+    build: ./server
+    container_name: mr14-server
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      PORT: 5000
+      MONGO_URI: mongodb://mongo:27017/mr14
+    depends_on:
+      - mongo
+
+  client:
+    build: ./client
+    container_name: mr14-client
+    restart: unless-stopped
+    ports:
+      - "5173:80"
+    depends_on:
+      - server
+
+volumes:
+  mongo_data:
