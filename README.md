@@ -27,7 +27,10 @@ make run
 
 ## Live URL
 
-<Add once M5 is done. Until then, leave as is.>
+## Live Deployment
+
+Frontend: https://mr14-frontend.onrender.com/
+Backend: https://mr14-backend.onrender.com/
 
 ## Health endpoint
 
