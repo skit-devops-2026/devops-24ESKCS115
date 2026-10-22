@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import poemsData from "./data/poem";
 import Poem from "./pages/Poem";
 import Profile from "./pages/Profile";
+import Signup from "./pages/Signup";
 
 function App() {
   const [poems, setPoems] = useState(poemsData);
@@ -43,6 +44,7 @@ function App() {
             }
           />
 
+<Route path="/signup" element={<Signup />} />
           <Route
             path="/discover"
             element={

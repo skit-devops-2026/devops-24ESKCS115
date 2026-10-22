@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 function Profile({ poems, savedPoems }) {
-  const { user, loading, updateProfile } = useAuth();
+  const { user, loading, updateProfile, logout } = useAuth();
 
   const [activeTab, setActiveTab] = useState("poems");
   const [editing, setEditing] = useState(false);
@@ -113,12 +113,28 @@ function Profile({ poems, savedPoems }) {
           </div>
         </div>
 
-        <button
-          className="profile-edit"
-          onClick={openEditProfile}
-        >
-          Edit profile
-        </button>
+        <div className="profile-actions">
+  <button
+    className="profile-edit"
+    onClick={openEditProfile}
+  >
+    Edit profile
+  </button>
+
+  <button
+    className="profile-edit"
+    onClick={async () => {
+      try {
+        await logout();
+        window.location.href = "/login";
+      } catch (error) {
+        setError(error.message);
+      }
+    }}
+  >
+    Log out
+  </button>
+</div>
       </section>
 
       {editing && (

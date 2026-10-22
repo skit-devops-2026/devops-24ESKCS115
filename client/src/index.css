@@ -1247,3 +1247,60 @@ body {
     animation: none;
   }
 }
+.login-letter {
+  animation: letterReveal 1s ease both;
+}
+
+.login-letter h1 {
+  font-family: "Playfair Display", serif;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+}
+
+.login-letter-text {
+  white-space: pre-wrap;
+  line-height: 2;
+  min-height: 12rem;
+  color: #c9c5bd;
+}
+
+.login-letter-cursor {
+  display: inline-block;
+  animation: letterBlink 0.8s step-end infinite;
+}
+
+.login-letter-link {
+  display: inline-block;
+  margin-top: 1.5rem;
+  color: #f1efe9;
+  text-decoration: none;
+  transition: opacity 0.25s ease;
+}
+
+.login-letter-link:hover {
+  opacity: 0.65;
+}
+
+@keyframes letterReveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes letterBlink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-letter,
+  .login-letter-cursor {
+    animation: none;
+  }
+}
